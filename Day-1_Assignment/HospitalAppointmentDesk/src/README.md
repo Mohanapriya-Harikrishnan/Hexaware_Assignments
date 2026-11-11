@@ -50,5 +50,4 @@ java -cp out Main
 | DP scheduling in this implementation | O(n^2) |
 | Greedy scheduling after sorting | O(n log n) |
 
-## Benchmark note
-The program prints measured times from your computer. Do not copy another person's timing values. Run it several times and report your own results. Small timing differences are normal due to JVM warm-up and system load.
+
