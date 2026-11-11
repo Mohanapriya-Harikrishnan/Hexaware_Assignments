@@ -1,0 +1,35 @@
+========== E-COMMERCE CATALOGUE AND TRAFFIC ANALYSIS ==========
+
+1. PRODUCT CATEGORY BST
+Inorder:   Beauty | Books | Clothing | Electronics | Footwear | Furniture | Groceries | Home | Jewellery | Kitchen | Laptops | Mobiles | Sports | Stationery | Toys | 
+Preorder:  Electronics | Books | Beauty | Clothing | Home | Groceries | Furniture | Footwear | Sports | Jewellery | Kitchen | Mobiles | Laptops | Toys | Stationery | 
+Postorder: Beauty | Clothing | Books | Footwear | Furniture | Groceries | Laptops | Mobiles | Kitchen | Jewellery | Stationery | Toys | Sports | Home | Electronics | 
+Search 'Mobiles': Category found
+Search 'Medicines': Category not found
+
+2. SKU LOOK-UP: CHAINING VS HASHMAP
+Collision example: SKU 101 and SKU 111 both go to bucket 1.
+Lookup SKU 111 in chained table: USB Keyboard
+SKUs stored: 100000
+Chaining lookup time: 1.525 ms
+HashMap lookup time:  4.888 ms
+Note: timings change depending on the computer and system load.
+
+3. MICROSERVICE DEPLOYMENT ORDER
+Valid deployment order (BFS): [Inventory, Notification, Pricing, Payment, Cart, API Gateway]
+Circular dependency before change: false
+After adding API Gateway -> Inventory, circular dependency: true
+Deployment order after cycle: Not possible (cycle exists)
+
+4. BUSIEST CONTINUOUS 3-HOUR WINDOW
+Busiest window: 9:00 to 12:00
+Total requests in 3 hours: 1300
+
+5. GIFT-CARD PAIRS USING TWO POINTERS
+Pairs adding up to Rs.550:
+Rs.100 + Rs.450
+Rs.150 + Rs.400
+Rs.200 + Rs.350
+Rs.250 + Rs.300
+
+========== PROGRAM COMPLETED ==========
