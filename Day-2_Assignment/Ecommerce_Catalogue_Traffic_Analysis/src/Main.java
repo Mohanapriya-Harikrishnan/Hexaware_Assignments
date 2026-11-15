@@ -8,8 +8,7 @@ public class Main {
         System.out.println("\n2. SKU LOOK-UP: CHAINING VS HASHMAP");
         SKUHashTable.run();
 
-        System.out.println("\n3. MICROSERVICE DEPLOYMENT ORDER");
-        MicroserviceGraph.run();
+        
 
         System.out.println("\n4. BUSIEST CONTINUOUS 3-HOUR WINDOW");
         TrafficAnalysis.run();

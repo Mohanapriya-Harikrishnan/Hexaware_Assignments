@@ -1,0 +1,102 @@
+Issue Id,Issue Type,Summary,Description,Priority,Labels,Labels,Story point estimate,Parent,Sprint
+1,Epic,Browse and Search,Help customers find the right product quickly from the supermarket's catalogue.,Medium,FreshCart,,,,
+2,Epic,Cart and Checkout,"Let customers collect items, apply offers and pay securely online.",Medium,FreshCart,,,,
+3,Epic,Delivery and Tracking,Let customers choose when the order arrives and follow it until it reaches them.,Medium,FreshCart,,,,
+4,Epic,Account and Order Management,Give customers a secure account and make repeat ordering effortless.,Medium,FreshCart,,,,
+14,Story,Register / log in with mobile OTP,"As a new or returning shopper, I want to register and log in using my mobile number and a one-time password (OTP), so that my cart and orders are saved to my account.
+
+Acceptance criteria:
+Scenario: Log in with a correct OTP
+Given I am a guest with items in my cart and I enter a valid 10-digit mobile number
+When I request an OTP and enter the 6-digit code correctly within 5 minutes
+Then I am logged in (an account is created if this is my first time) and my guest cart is merged into my account
+
+Scenario (negative): Wrong OTP (negative)
+Given I have requested an OTP
+When I enter an incorrect code
+Then I see 'Incorrect OTP, 2 attempts left' and after 3 wrong attempts I am blocked from retrying for 15 minutes
+
+Scenario (negative): Expired OTP (negative)
+Given I received an OTP more than 5 minutes ago
+When I enter that OTP
+Then I see 'This OTP has expired' and I am offered a 'Resend OTP' button",Highest,FreshCart,MoSCoW-Must,5,4,Sprint 1
+5,Story,Search products by name,"As a shopper, I want to search for products by name or keyword, so that I can find the groceries I need quickly.
+
+Acceptance criteria:
+Scenario: Successful search by name
+Given I am on the home screen and the catalogue contains 'Basmati Rice 5 kg'
+When I type 'basmati' in the search bar and tap Search
+Then the results list shows every product whose name contains 'basmati' and each result shows its image, name and price and the results appear within 2 seconds
+
+Scenario (negative): No matching products (negative)
+Given no product in the catalogue matches 'xyzabc'
+When I search for 'xyzabc'
+Then I see the message ""No products found for 'xyzabc'"" and I am offered links to browse by category and no error screen is shown
+
+Scenario (negative): Empty search input (negative)
+Given the search bar is empty
+When I tap Search
+Then no search is run and I see the prompt 'Enter at least 2 characters'",Highest,FreshCart,MoSCoW-Must,5,1,Sprint 1
+7,Story,View product details,"As a shopper, I want to view a product's details (images, price, unit/weight, nutrition and stock status), so that I can decide whether to buy it.",Highest,FreshCart,MoSCoW-Must,3,1,Sprint 1
+8,Story,Add to / edit cart,"As a shopper, I want to add products to a cart and change or remove quantities, so that I can review my basket before paying.
+
+Acceptance criteria:
+Scenario: Add an item to the cart
+Given 'Toned Milk 1 L' is in stock and priced at ₹60 and my cart is empty
+When I tap 'Add to cart' on that product
+Then the cart badge shows 1 item and the cart subtotal shows ₹60
+
+Scenario: Change quantity
+Given my cart contains 2 × 'Toned Milk 1 L' at ₹60 each
+When I increase the quantity to 3
+Then the line total shows ₹180 and the cart subtotal is recalculated
+
+Scenario (negative): Quantity above available stock (negative)
+Given only 4 units of 'Toned Milk 1 L' are in stock and I already have 4 in my cart
+When I try to increase the quantity to 5
+Then the quantity stays at 4 and I see the message 'Only 4 left in stock'
+
+Scenario: Remove the last item
+Given my cart contains exactly one item
+When I remove that item
+Then the item disappears and I see 'Your cart is empty' with a link back to the catalogue",Highest,FreshCart,MoSCoW-Must,5,2,Sprint 1
+11,Story,Choose address and delivery slot,"As a shopper, I want to select my delivery address and an available delivery time slot at checkout, so that my groceries arrive when I am at home.
+
+Acceptance criteria:
+Scenario: Select an available slot
+Given I am at checkout with an address inside the serviceable area
+When I open delivery slots and select 'Tomorrow, 6 PM to 8 PM'
+Then the slot is highlighted and it appears in my order summary and the slot is held for me for 10 minutes
+
+Scenario (negative): Slot is full (negative)
+Given the 'Tomorrow, 6 PM to 8 PM' slot has reached its capacity of 20 orders
+When I view the delivery slots
+Then that slot is shown as 'Full' and it cannot be selected
+
+Scenario (negative): Address outside delivery area (negative)
+Given I enter a pincode that is not serviced by any store
+When I tap Continue
+Then I see 'Sorry, we don't deliver to this pincode yet' and no slots are shown and I cannot proceed to payment",Highest,FreshCart,MoSCoW-Must,5,3,Sprint 2
+10,Story,Pay online (UPI / card),"As a shopper, I want to pay for my order online using UPI or a debit/credit card, so that I can complete my purchase without handling cash.
+
+Acceptance criteria:
+Scenario: Successful UPI payment
+Given my cart total is ₹850 and I have selected a delivery address and slot
+When I choose UPI and approve the payment in my UPI app
+Then the order is created with status 'Confirmed' and I see a confirmation screen with the order ID and a receipt is sent by SMS
+
+Scenario (negative): Card payment declined (negative)
+Given I have chosen to pay by card and my bank declines the transaction
+When the payment result is returned to the app
+Then I see 'Payment failed, no amount has been charged' and no order is created and my cart is kept and I can retry or choose another method
+
+Scenario (negative): Payment not completed in time (negative)
+Given I started a UPI payment and did not approve it
+When 5 minutes pass
+Then the payment attempt expires and the reserved stock and slot are released and I am told the order was not placed",Highest,FreshCart,MoSCoW-Must,8,2,Sprint 2
+6,Story,Filter by category / price / diet,"As a shopper, I want to filter search results by category, price range and dietary type (vegetarian, vegan, gluten-free), so that I only see products that suit me.",High,FreshCart,MoSCoW-Should,3,1,Sprint 2
+12,Story,Live delivery tracking on map,"As a shopper, I want to see my delivery partner's live location on a map once my order is out for delivery, so that I know when to expect it.",High,FreshCart,MoSCoW-Should,8,3,Sprint 3
+13,Story,Order status notifications,"As a shopper, I want to receive push or SMS notifications when my order is confirmed, packed, out for delivery and delivered, so that I stay informed without opening the app.",High,FreshCart,MoSCoW-Should,3,3,Sprint 3
+9,Story,Apply promo code,"As a shopper, I want to apply a valid promo code to my cart, so that I get the discount that was offered to me.",Medium,FreshCart,MoSCoW-Could,5,2,Sprint 3
+15,Story,Order history and one-tap reorder,"As a returning shopper, I want to view my past orders and reorder them with one tap, so that I can repeat my regular shopping quickly.",Medium,FreshCart,MoSCoW-Could,3,4,Sprint 4
+16,Story,Schedule recurring weekly order,"As a shopper, I want to schedule a recurring weekly order, so that my regular staples are delivered automatically.",Low,FreshCart,MoSCoW-Wont,8,4,

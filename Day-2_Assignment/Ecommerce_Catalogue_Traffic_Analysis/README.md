@@ -40,3 +40,4 @@ Ecommerce_Catalogue_Traffic_Analysis/
 - The traffic input represents requests in each hour, not requests per minute. The 3-hour window is calculated from these 24 hourly totals.
 - HashMap and custom-table timings depend on the computer and system load. Run the program on your own laptop and use the timings printed there in your submitted output.
 - The values used in the program are sample values for demonstrating the algorithms. They can be changed if your faculty has provided a specific dataset.
+![alt text](image-1.png)
