@@ -1,0 +1,70 @@
+DAY 8 - TRANSACTIONS AND ISOLATION LEVELS
+
+
+1. Autocommit
+By default, MySQL normally commits each successful statement when
+ autocommit is enabled. A transaction groups multiple statements together.
+
+
+use day8_bank;
+create table if not exists isolation_demo (
+    id int primary key, balance decimal(12,2) not null
+) engine=InnoDB;
+set autocommit = 1;
+delete from isolation_demo;
+insert into isolation_demo values (1,1000);
+update isolation_demo set balance = 1100 where id = 1;
+rollback;
+select * from isolation_demo; -- expected 1100 (already committed)
+set autocommit = 0;
+update isolation_demo set balance = 1200 where id = 1;
+rollback;
+select * from isolation_demo; -- expected 1100
+rollback;
+set autocommit = 1;
+update isolation_demo set balance = 1000 where id = 1;
+
+2. Two-session experiment
+Open two independent MySQL connections (A and B), not just two editors
+sharing one connection. Run use day8_bank; and set autocommit = 1;
+in both. select connection_id(); should show different IDs.
+Execute the steps in the exact order below. Use ordinary SELECT, not
+SELECT FOR UPDATE, for the reads.
+
+READ COMMITTED
+Step  Session  SQL / expected result
+1     A        set session transaction isolation level read committed;
+2     A        start transaction;
+3     A        select balance from isolation_demo where id=1; -- 1000
+4     B        start transaction;
+5     B        update isolation_demo set balance=1200 where id=1;
+6     A        select balance from isolation_demo where id=1; -- 1000
+7     B        commit;
+8     A        select balance from isolation_demo where id=1; -- 1200
+9     A        commit;
+
+REPEATABLE READ
+Step  Session  SQL / expected result
+1     B        update isolation_demo set balance=1000 where id=1;
+2     A        set session transaction isolation level repeatable read;
+3     A        start transaction;
+4     A        select balance from isolation_demo where id=1; -- 1000
+5     B        start transaction;
+6     B        update isolation_demo set balance=1200 where id=1;
+7     A        select balance from isolation_demo where id=1; -- 1000
+8     B        commit;
+9     A        select balance from isolation_demo where id=1; -- 1000
+10    A        commit;
+11    A        select balance from isolation_demo where id=1; -- 1200
+12    B        update isolation_demo set balance=1000 where id=1;
+
+Observation: READ COMMITTED creates a fresh snapshot for each ordinary
+consistent read. REPEATABLE READ keeps the snapshot established by the
+first consistent read in the transaction. Neither reads uncommitted data.
+The changed second read under READ COMMITTED is a non-repeatable read.
+
+3. ACID in this assignment
+Atomicity: debit and credit are committed together or rolled back together.
+Consistency: balance checks, account status and constraints protect rules.
+Isolation: row locks prevent concurrent transfers from using stale balances.
+Durability: committed changes survive a restart under normal durable settings.
